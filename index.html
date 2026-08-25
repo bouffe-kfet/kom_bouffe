@@ -8,13 +8,13 @@
 <link href="https://fonts.googleapis.com/css2?family=Anton&family=Karla:wght@400;500;700&family=Space+Mono:wght@400;700&display=swap" rel="stylesheet">
 <style>
   :root{
-    --ink: #1E3A2B;
-    --ink-light: #2C5340;
+    --ink: #17130F;
+    --ink-light: #2B2620;
     --paper: #F4EFE1;
     --paper-dim: #E9E2CE;
-    --orange: #E2601F;
-    --plum: #4A1942;
-    --charcoal: #201C18;
+    --orange: #D81616;
+    --plum: #3A1010;
+    --charcoal: #1A1512;
   }
   *{box-sizing:border-box;}
   body{
@@ -40,7 +40,7 @@
   .hero{margin-bottom:3rem;}
   .hero p{font-size:1.05rem;max-width:52ch;color:#DCD5C0;}
 
-  .stamps{display:flex;flex-wrap:wrap;gap:.9rem;margin-top:1.5rem;}
+  .stamps{display:flex;flex-wrap:wrap;gap:.9rem;margin-top:1.5rem;margin-bottom:2.2rem;}
   .stamp{
     font-family:'Space Mono',monospace;
     font-size:.72rem;
@@ -210,7 +210,19 @@
     font-family:'Karla',sans-serif;font-size:.9rem;background:#fff;color:var(--charcoal);
   }
   .form textarea{resize:vertical;min-height:70px;}
-  .ing-row{display:grid;grid-template-columns:2fr 1fr 1fr;gap:.5rem;margin-top:.4rem;}
+  .ing-row{display:grid;grid-template-columns:2fr 1fr 1fr auto;gap:.5rem;margin-top:.4rem;align-items:center;}
+  .remove-ing{
+    background:transparent;border:1px solid var(--paper-dim);border-radius:3px;
+    color:var(--ink-light);width:34px;height:34px;font-size:1.1rem;line-height:1;cursor:pointer;
+  }
+  .remove-ing:hover{border-color:var(--orange);color:var(--orange);}
+  .add-ing-btn{
+    margin-top:.6rem;
+    font-family:'Space Mono',monospace;font-size:.75rem;text-transform:uppercase;letter-spacing:.05em;
+    background:transparent;color:var(--ink-light);border:1px dashed var(--ink-light);border-radius:3px;
+    padding:.45rem .9rem;cursor:pointer;
+  }
+  .add-ing-btn:hover{border-color:var(--orange);color:var(--orange);border-style:solid;}
   .submit-btn{
     margin-top:1.3rem;
     background:var(--ink);
@@ -233,7 +245,8 @@
   </header>
 
   <div class="hero">
-    <p>Des recettes végé, de saison, pensées pour nourrir toute une équipe de barmans.</p>
+    <p>Des recettes végé et de saison pour la semaine.</p>
+    <p>Serviam Indeclinabilem !</p>
   </div>
 
   <div class="nav" id="nav">
@@ -303,9 +316,12 @@
     <input type="text" placeholder="Carotte">
 
     <label>Ingrédients (par personne)</label>
-    <div class="ing-row"><input placeholder="Ingrédient"><input placeholder="Qté / pers"><input placeholder="Unité"></div>
-    <div class="ing-row"><input placeholder="Ingrédient"><input placeholder="Qté / pers"><input placeholder="Unité"></div>
-    <div class="ing-row"><input placeholder="Ingrédient"><input placeholder="Qté / pers"><input placeholder="Unité"></div>
+    <div id="ingRows">
+      <div class="ing-row"><input placeholder="Ingrédient"><input placeholder="Qté / pers"><input placeholder="Unité"><button type="button" class="remove-ing" aria-label="Supprimer">×</button></div>
+      <div class="ing-row"><input placeholder="Ingrédient"><input placeholder="Qté / pers"><input placeholder="Unité"><button type="button" class="remove-ing" aria-label="Supprimer">×</button></div>
+      <div class="ing-row"><input placeholder="Ingrédient"><input placeholder="Qté / pers"><input placeholder="Unité"><button type="button" class="remove-ing" aria-label="Supprimer">×</button></div>
+    </div>
+    <button type="button" id="addIngBtn" class="add-ing-btn">+ Ajouter un ingrédient</button>
 
     <label>Instructions</label>
     <textarea placeholder="Fais revenir les oignons..."></textarea>
@@ -316,6 +332,7 @@
 </div>
 
 <script>
+
 const MOIS = ['Jan','Fév','Mar','Avr','Mai','Juin','Juil','Août','Sep','Oct','Nov','Déc'];
 const MOIS_FULL = ['Janvier','Février','Mars','Avril','Mai','Juin','Juillet','Août','Septembre','Octobre','Novembre','Décembre'];
 
@@ -460,6 +477,20 @@ document.getElementById('servings').addEventListener('input', () => { if(selecte
 
 document.getElementById('toggleForm').addEventListener('click', () => {
   document.getElementById('form').classList.toggle('open');
+});
+
+document.getElementById('addIngBtn').addEventListener('click', () => {
+  const row = document.createElement('div');
+  row.className = 'ing-row';
+  row.innerHTML = '<input placeholder="Ingrédient"><input placeholder="Qté / pers"><input placeholder="Unité"><button type="button" class="remove-ing" aria-label="Supprimer">×</button>';
+  document.getElementById('ingRows').appendChild(row);
+});
+
+document.getElementById('ingRows').addEventListener('click', e => {
+  if(e.target.classList.contains('remove-ing')){
+    const rows = document.getElementById('ingRows');
+    if(rows.children.length > 1) e.target.closest('.ing-row').remove();
+  }
 });
 
 renderAll();
