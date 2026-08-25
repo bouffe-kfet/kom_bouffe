@@ -87,13 +87,14 @@
   .view.open{display:block;}
 
   .seasonal-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(180px,1fr));gap:1.5rem;margin-bottom:1rem;}
-  .seasonal-grid h4{
+  .seasonal-grid table{width:100%;border-collapse:collapse;}
+  .seasonal-grid caption{
     font-family:'Space Mono',monospace;
     font-size:.75rem;text-transform:uppercase;letter-spacing:.06em;
-    color:var(--orange);margin:0 0 .6rem;
+    color:var(--orange);margin:0 0 .6rem;text-align:left;caption-side:top;
   }
-  .seasonal-grid ul{list-style:none;margin:0;padding:0;}
-  .seasonal-grid li{padding:.3rem 0;border-bottom:1px solid var(--ink-light);color:#DCD5C0;font-size:.92rem;}
+  .seasonal-grid td{padding:.4rem 0;border-bottom:1px solid var(--ink-light);color:#DCD5C0;font-size:.92rem;}
+  .seasonal-grid tr:last-child td{border-bottom:none;}
 
   .search-row{display:flex;gap:.6rem;margin-bottom:1.5rem;}
   .search-row input{
@@ -267,18 +268,18 @@
     <div class="stamps" id="stamps2"></div>
     <p class="section-label" id="seasonLabel">Aliments de saison — Mars</p>
     <div class="seasonal-grid">
-      <div>
-        <h4>Légumes</h4>
-        <ul id="seasonVeg"></ul>
-      </div>
-      <div>
-        <h4>Fruits</h4>
-        <ul id="seasonFruit"></ul>
-      </div>
-      <div>
-        <h4>Céréales &amp; légumineuses</h4>
-        <ul id="seasonGrain"></ul>
-      </div>
+      <table>
+        <caption>Légumes</caption>
+        <tbody id="seasonVeg"></tbody>
+      </table>
+      <table>
+        <caption>Fruits</caption>
+        <tbody id="seasonFruit"></tbody>
+      </table>
+      <table>
+        <caption>Céréales &amp; légumineuses</caption>
+        <tbody id="seasonGrain"></tbody>
+      </table>
     </div>
   </div>
 
@@ -365,8 +366,8 @@ function renderSeason(){
   document.getElementById('seasonLabel').textContent = 'Aliments de saison — ' + MOIS_FULL[currentMonth];
   const cal = CALENDAR[currentMonth] || {veg:[], fruit:[], grain:[]};
   const fill = (id, arr) => {
-    const ul = document.getElementById(id);
-    ul.innerHTML = arr.map(x => '<li>' + x + '</li>').join('');
+    const tbody = document.getElementById(id);
+    tbody.innerHTML = arr.map(x => '<tr><td>' + x + '</td></tr>').join('');
   };
   fill('seasonVeg', cal.veg);
   fill('seasonFruit', cal.fruit);
