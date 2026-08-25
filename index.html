@@ -309,10 +309,10 @@
 
   <div class="form" id="form">
     <label>Nom de la recette</label>
-    <input type="text" placeholder="Curry de lentilles">
+    <input type="text" id="recipeName" placeholder="Curry de lentilles">
 
     <label>Légume ou fruit de saison associé</label>
-    <input type="text" placeholder="Carotte">
+    <input type="text" id="recipeLegume" placeholder="Carotte">
 
     <label>Ingrédients (par personne)</label>
     <div id="ingRows">
@@ -323,43 +323,25 @@
     <button type="button" id="addIngBtn" class="add-ing-btn">+ Ajouter un ingrédient</button>
 
     <label>Instructions</label>
-    <textarea placeholder="Fais revenir les oignons..."></textarea>
+    <textarea id="recipeInstructions" placeholder="Fais revenir les oignons..."></textarea>
 
-    <button class="submit-btn">Enregistrer la recette</button>
+    <p id="formError" style="color:#A32D2D;font-size:.85rem;display:none;margin-top:.8rem;"></p>
+    <p id="formSuccess" style="color:#3B6D11;font-size:.85rem;display:none;margin-top:.8rem;"></p>
+
+    <button class="submit-btn" id="submitRecipeBtn">Enregistrer la recette</button>
   </div>
 
 </div>
 
 <script>
 
+const API_URL = 'https://script.google.com/macros/s/AKfycbxcNZ4J5fi5wWmL3tKNrl7rdQlhTH8szcmiJ_H-Df1UO-ckco09Zw4ZkSRb8DGq0fSC/exec';
+
 const MOIS = ['Jan','Fév','Mar','Avr','Mai','Juin','Juil','Août','Sep','Oct','Nov','Déc'];
 const MOIS_FULL = ['Janvier','Février','Mars','Avril','Mai','Juin','Juillet','Août','Septembre','Octobre','Novembre','Décembre'];
 
-const RECIPES = [
-  {name:"Curry de lentilles", months:[0,1,2,10,11], ingredients:[["Lentilles corail","80","g"],["Lait de coco","100","ml"],["Oignon","0.3","piece"],["Curry en poudre","5","g"]], instructions:"Fais revenir l'oignon, ajoute le curry, les lentilles rincées et le lait de coco. Laisse mijoter 20 min."},
-  {name:"Croziflette", months:[0,1,11], ingredients:[["Crozets","100","g"],["Reblochon","40","g"],["Lardons fumés","30","g"],["Oignon","0.2","piece"]], instructions:"Cuis les crozets, fais revenir lardons et oignons, mélange le tout et gratine au four avec le reblochon."},
-  {name:"Blé aux champignons", months:[8,9,10], ingredients:[["Blé","70","g"],["Champignons de Paris","100","g"],["Ail","1","gousse"],["Persil","5","g"]], instructions:"Cuis le blé, poêle les champignons avec l'ail, mélange et parsème de persil frais."},
-  {name:"Tortilla", months:[2,3,4,5], ingredients:[["Pomme de terre","150","g"],["Oeuf","1","piece"],["Oignon","0.3","piece"]], instructions:"Fais cuire les pommes de terre en fines tranches avec l'oignon, ajoute les oeufs battus et cuis à la poêle des deux côtés."},
-  {name:"Riz à la crème de poireaux", months:[9,10,11,0], ingredients:[["Riz","70","g"],["Poireau","1","piece"],["Crème fraîche","30","g"]], instructions:"Cuis le riz. Fais fondre les poireaux émincés puis ajoute la crème. Mélange au riz."},
-  {name:"Lentilles à la marocaine", months:[10,11,0,1], ingredients:[["Lentilles vertes","80","g"],["Tomates concassées","80","g"],["Cumin","3","g"],["Raisins secs","10","g"]], instructions:"Fais revenir les épices, ajoute tomates et lentilles, laisse mijoter puis ajoute les raisins secs en fin de cuisson."},
-  {name:"Gnocchis ratatouille", months:[5,6,7,8], ingredients:[["Gnocchis","150","g"],["Courgette","0.5","piece"],["Aubergine","0.3","piece"],["Poivron","0.3","piece"]], instructions:"Fais revenir les légumes coupés en dés, ajoute une sauce tomate, et sers avec les gnocchis poêlés."},
-  {name:"Pâtes au pesto", months:[3,4,5,6], ingredients:[["Pâtes","100","g"],["Basilic","10","g"],["Parmesan","15","g"],["Pignons de pin","10","g"]], instructions:"Mixe basilic, parmesan, pignons et huile d'olive. Mélange aux pâtes cuites."},
-];
-
-const CALENDAR = [
-  {veg:["Poireau","Chou","Céleri-rave","Carotte","Betterave"], fruit:["Clémentine","Orange","Kiwi","Pomme"], grain:["Lentille","Blé"]},
-  {veg:["Poireau","Chou","Endive","Carotte","Céleri-branche"], fruit:["Orange","Kiwi","Pamplemousse"], grain:["Lentille","Pois cassé"]},
-  {veg:["Poireau","Épinard","Carotte","Radis"], fruit:["Pomme","Poire","Citron"], grain:["Lentille","Riz"]},
-  {veg:["Asperge","Radis","Épinard","Petit pois"], fruit:["Pomme","Fraise"], grain:["Blé","Pois chiche"]},
-  {veg:["Asperge","Petit pois","Radis","Artichaut"], fruit:["Fraise","Cerise","Rhubarbe"], grain:["Blé"]},
-  {veg:["Courgette","Petit pois","Artichaut","Fenouil"], fruit:["Cerise","Abricot","Fraise"], grain:["Riz"]},
-  {veg:["Courgette","Tomate","Poivron","Aubergine"], fruit:["Abricot","Pêche","Melon"], grain:["Blé"]},
-  {veg:["Tomate","Poivron","Aubergine","Concombre"], fruit:["Pêche","Melon","Prune"], grain:["Riz"]},
-  {veg:["Tomate","Champignon","Courge","Poivron"], fruit:["Raisin","Prune","Figue"], grain:["Blé","Lentille"]},
-  {veg:["Champignon","Courge","Chou","Céleri-rave"], fruit:["Raisin","Kaki","Coing"], grain:["Lentille"]},
-  {veg:["Chou","Poireau","Céleri-rave","Betterave"], fruit:["Kaki","Clémentine","Poire"], grain:["Lentille","Pois cassé"]},
-  {veg:["Chou","Poireau","Endive","Carotte"], fruit:["Clémentine","Orange","Mandarine"], grain:["Lentille"]},
-];
+let RECIPES = [];
+let CALENDAR = [];
 
 let currentMonth = 2;
 let selectedRecipe = null;
@@ -394,7 +376,7 @@ function renderAll(){
 
 function renderSeason(){
   document.getElementById('seasonLabel').textContent = 'Aliments de saison — ' + MOIS_FULL[currentMonth];
-  const cal = CALENDAR[currentMonth];
+  const cal = CALENDAR[currentMonth] || {veg:[], fruit:[], grain:[]};
   const fill = (id, arr) => {
     const ul = document.getElementById(id);
     ul.innerHTML = arr.map(x => '<li>' + x + '</li>').join('');
@@ -492,7 +474,88 @@ document.getElementById('ingRows').addEventListener('click', e => {
   }
 });
 
-renderAll();
+document.getElementById('submitRecipeBtn').addEventListener('click', async () => {
+  const errorEl = document.getElementById('formError');
+  const successEl = document.getElementById('formSuccess');
+  errorEl.style.display = 'none';
+  successEl.style.display = 'none';
+
+  const name = document.getElementById('recipeName').value.trim();
+  const legume = document.getElementById('recipeLegume').value.trim();
+  const instructions = document.getElementById('recipeInstructions').value.trim();
+
+  const ingredients = [];
+  document.querySelectorAll('#ingRows .ing-row').forEach(row => {
+    const inputs = row.querySelectorAll('input');
+    const nom = inputs[0].value.trim();
+    const qte = inputs[1].value.trim();
+    const unite = inputs[2].value.trim();
+    if(nom) ingredients.push({ nom, qte, unite });
+  });
+
+  if(!name){
+    errorEl.textContent = 'Indique le nom de la recette.';
+    errorEl.style.display = 'block';
+    return;
+  }
+  if(ingredients.length === 0){
+    errorEl.textContent = 'Ajoute au moins un ingrédient avec son nom.';
+    errorEl.style.display = 'block';
+    return;
+  }
+  if(!instructions){
+    errorEl.textContent = 'Ajoute les instructions de préparation.';
+    errorEl.style.display = 'block';
+    return;
+  }
+
+  const btn = document.getElementById('submitRecipeBtn');
+  btn.disabled = true;
+  btn.textContent = 'Envoi...';
+
+  try{
+    await fetch(API_URL, {
+      method: 'POST',
+      headers: { 'Content-Type': 'text/plain;charset=utf-8' },
+      body: JSON.stringify({ name, legume, ingredients, instructions })
+    });
+    successEl.textContent = 'Recette envoyée ! Elle sera visible une fois validée.';
+    successEl.style.display = 'block';
+    document.getElementById('recipeName').value = '';
+    document.getElementById('recipeLegume').value = '';
+    document.getElementById('recipeInstructions').value = '';
+    document.getElementById('ingRows').innerHTML = '<div class="ing-row"><input placeholder="Ingrédient"><input placeholder="Qté / pers"><input placeholder="Unité"><button type="button" class="remove-ing" aria-label="Supprimer">×</button></div>';
+  }catch(err){
+    errorEl.textContent = "L'envoi a échoué, réessaie dans un instant.";
+    errorEl.style.display = 'block';
+  }finally{
+    btn.disabled = false;
+    btn.textContent = 'Enregistrer la recette';
+  }
+});
+
+function showLoading(msg){
+  document.getElementById('recipeList').innerHTML = '<p style="color:#DCD5C0;grid-column:1/-1;">' + msg + '</p>';
+}
+
+async function loadData(){
+  showLoading('Chargement des recettes...');
+  try{
+    const res = await fetch(API_URL);
+    const data = await res.json();
+    RECIPES = data.recipes.map(r => ({
+      name: r.name,
+      months: r.months,
+      ingredients: r.ingredients.map(i => [i.nom, i.qte, i.unite]),
+      instructions: r.instructions
+    }));
+    CALENDAR = data.calendar;
+    renderAll();
+  }catch(err){
+    showLoading('Impossible de charger les recettes pour le moment. Réessaie un peu plus tard.');
+  }
+}
+loadData();
 </script>
 </body>
 </html>
