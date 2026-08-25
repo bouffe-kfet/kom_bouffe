@@ -173,20 +173,6 @@
 
   .instructions{flex:1;min-width:220px;font-size:.92rem;}
 
-  .add-toggle{
-    font-family:'Space Mono',monospace;
-    font-size:.85rem;
-    background:transparent;
-    color:var(--paper);
-    border:2px solid var(--orange);
-    border-radius:3px;
-    padding:.7rem 1.3rem;
-    cursor:pointer;
-    text-transform:uppercase;
-    letter-spacing:.05em;
-  }
-  .add-toggle:hover{background:var(--orange);}
-
   .form{
     background:var(--paper);
     color:var(--charcoal);
@@ -252,6 +238,7 @@
     <button data-view="month" class="active">Choisir une recette</button>
     <button data-view="season">Fruits &amp; légumes de saison</button>
     <button data-view="search">Choisir mon aliment</button>
+    <button data-view="add">Ajouter une recette</button>
   </div>
 
   <div class="view open" id="view-month">
@@ -304,31 +291,31 @@
     <div id="searchResults"></div>
   </div>
 
-  <p class="section-label">Une nouvelle recette ?</p>
-  <button class="add-toggle" id="toggleForm">+ Ajouter une recette</button>
+  <div class="view" id="view-add">
+    <p class="section-label">Une nouvelle recette</p>
+    <div class="form open" id="form">
+      <label>Nom de la recette</label>
+      <input type="text" id="recipeName" placeholder="Curry de lentilles">
 
-  <div class="form" id="form">
-    <label>Nom de la recette</label>
-    <input type="text" id="recipeName" placeholder="Curry de lentilles">
+      <label>Légume ou fruit de saison associé</label>
+      <input type="text" id="recipeLegume" placeholder="Carotte">
 
-    <label>Légume ou fruit de saison associé</label>
-    <input type="text" id="recipeLegume" placeholder="Carotte">
+      <label>Ingrédients (par personne)</label>
+      <div id="ingRows">
+        <div class="ing-row"><input placeholder="Ingrédient"><input placeholder="Qté / pers"><input placeholder="Unité"><button type="button" class="remove-ing" aria-label="Supprimer">×</button></div>
+        <div class="ing-row"><input placeholder="Ingrédient"><input placeholder="Qté / pers"><input placeholder="Unité"><button type="button" class="remove-ing" aria-label="Supprimer">×</button></div>
+        <div class="ing-row"><input placeholder="Ingrédient"><input placeholder="Qté / pers"><input placeholder="Unité"><button type="button" class="remove-ing" aria-label="Supprimer">×</button></div>
+      </div>
+      <button type="button" id="addIngBtn" class="add-ing-btn">+ Ajouter un ingrédient</button>
 
-    <label>Ingrédients (par personne)</label>
-    <div id="ingRows">
-      <div class="ing-row"><input placeholder="Ingrédient"><input placeholder="Qté / pers"><input placeholder="Unité"><button type="button" class="remove-ing" aria-label="Supprimer">×</button></div>
-      <div class="ing-row"><input placeholder="Ingrédient"><input placeholder="Qté / pers"><input placeholder="Unité"><button type="button" class="remove-ing" aria-label="Supprimer">×</button></div>
-      <div class="ing-row"><input placeholder="Ingrédient"><input placeholder="Qté / pers"><input placeholder="Unité"><button type="button" class="remove-ing" aria-label="Supprimer">×</button></div>
+      <label>Instructions</label>
+      <textarea id="recipeInstructions" placeholder="Fais revenir les oignons..."></textarea>
+
+      <p id="formError" style="color:#A32D2D;font-size:.85rem;display:none;margin-top:.8rem;"></p>
+      <p id="formSuccess" style="color:#3B6D11;font-size:.85rem;display:none;margin-top:.8rem;"></p>
+
+      <button class="submit-btn" id="submitRecipeBtn">Enregistrer la recette</button>
     </div>
-    <button type="button" id="addIngBtn" class="add-ing-btn">+ Ajouter un ingrédient</button>
-
-    <label>Instructions</label>
-    <textarea id="recipeInstructions" placeholder="Fais revenir les oignons..."></textarea>
-
-    <p id="formError" style="color:#A32D2D;font-size:.85rem;display:none;margin-top:.8rem;"></p>
-    <p id="formSuccess" style="color:#3B6D11;font-size:.85rem;display:none;margin-top:.8rem;"></p>
-
-    <button class="submit-btn" id="submitRecipeBtn">Enregistrer la recette</button>
   </div>
 
 </div>
@@ -455,10 +442,6 @@ function updateIngredients(){
   });
 }
 document.getElementById('servings').addEventListener('input', () => { if(selectedRecipe) updateIngredients(); });
-
-document.getElementById('toggleForm').addEventListener('click', () => {
-  document.getElementById('form').classList.toggle('open');
-});
 
 document.getElementById('addIngBtn').addEventListener('click', () => {
   const row = document.createElement('div');
