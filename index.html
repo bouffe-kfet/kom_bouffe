@@ -87,13 +87,13 @@
   .view.open{display:block;}
 
   .seasonal-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(180px,1fr));gap:1.5rem;margin-bottom:1rem;align-items:start;}
-  .seasonal-grid table{width:100%;border-collapse:collapse;border:1px solid var(--plum);background:var(--paper);}
-  .seasonal-grid caption{
-    font-family:'Space Mono',monospace;
-    font-size:.75rem;text-transform:uppercase;letter-spacing:.06em;
-    color:var(--orange);margin:0 0 .5rem;text-align:left;caption-side:top;
+  .seasonal-grid table{width:100%;border-collapse:collapse;background:var(--paper);border-radius:4px;overflow:hidden;}
+  .seasonal-grid th{
+    background:var(--paper-dim);color:var(--orange);
+    font-family:'Anton',sans-serif;font-weight:400;font-size:.85rem;
+    padding:.5rem .6rem;text-align:left;
   }
-  .seasonal-grid td{padding:.3rem .6rem;border:1px solid var(--plum);color:var(--charcoal);font-size:.85rem;line-height:1.2;}
+  .seasonal-grid td{padding:.4rem .6rem;color:var(--charcoal);font-size:.85rem;line-height:1.2;}
 
   .search-row{display:flex;gap:.6rem;margin-bottom:1.5rem;}
   .search-row input{
@@ -268,15 +268,15 @@
     <p class="section-label" id="seasonLabel">Aliments de saison — Mars</p>
     <div class="seasonal-grid">
       <table>
-        <caption>Légumes</caption>
+        <thead><tr><th>Légumes</th></tr></thead>
         <tbody id="seasonVeg"></tbody>
       </table>
       <table>
-        <caption>Fruits</caption>
+        <thead><tr><th>Fruits</th></tr></thead>
         <tbody id="seasonFruit"></tbody>
       </table>
       <table>
-        <caption>Céréales &amp; légumineuses</caption>
+        <thead><tr><th>Céréales &amp; légumineuses</th></tr></thead>
         <tbody id="seasonGrain"></tbody>
       </table>
     </div>
