@@ -86,15 +86,14 @@
   .view{display:none;}
   .view.open{display:block;}
 
-  .seasonal-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(180px,1fr));gap:1.5rem;margin-bottom:1rem;}
-  .seasonal-grid table{width:100%;border-collapse:collapse;}
+  .seasonal-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(180px,1fr));gap:1.5rem;margin-bottom:1rem;align-items:start;}
+  .seasonal-grid table{width:100%;border-collapse:collapse;border:1px solid var(--ink-light);}
   .seasonal-grid caption{
     font-family:'Space Mono',monospace;
     font-size:.75rem;text-transform:uppercase;letter-spacing:.06em;
-    color:var(--orange);margin:0 0 .6rem;text-align:left;caption-side:top;
+    color:var(--orange);margin:0 0 .5rem;text-align:left;caption-side:top;
   }
-  .seasonal-grid td{padding:.4rem 0;border-bottom:1px solid var(--ink-light);color:#DCD5C0;font-size:.92rem;}
-  .seasonal-grid tr:last-child td{border-bottom:none;}
+  .seasonal-grid td{padding:.3rem .6rem;border:1px solid var(--ink-light);color:#DCD5C0;font-size:.85rem;line-height:1.2;}
 
   .search-row{display:flex;gap:.6rem;margin-bottom:1.5rem;}
   .search-row input{
