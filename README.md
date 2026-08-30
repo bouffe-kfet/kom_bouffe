@@ -1,7 +1,7 @@
 # Kom Bouffe
 
-Yooo, petit site créé pour la kom bouffe, l'objectif c'est de tout centraliser et automatiser pour choisir des recettes de saison, consulter le calendrier des fruits/légumes, chercher par ingrédient ou par nom, et proposer de nouvelles recettes.
-Le site est hébergé gratuitement sur GitHub Pages et va chercher ses données dans un Google Sheet, via un petit script (Google Apps Script) qui joue le rôle de  API.
+Yooo, petit site créé pour la Kom Bouffe, l'objectif c'est de tout centraliser et automatiser pour choisir des recettes de saison, consulter le calendrier des fruits/légumes, chercher par ingrédient ou par nom, et proposer de nouvelles recettes.
+Le site est hébergé gratuitement sur GitHub Pages et va chercher ses données dans un Google Sheet sur le drive (https://docs.google.com/spreadsheets/d/1f6UtQ44cj-I1xcCuKs7_HH29g_xsoaGcmI6DUb3ZP7Y/edit?usp=drive_link), via un petit script (Google Apps Script) qui joue le rôle de  API.
 
 *fait par la Belle Bite Lady (BBL)*
 
