@@ -1,5 +1,5 @@
 # Kom Bouffe
-### par la BBL
+*fait par la BBL*
 
 Yooo, petit site créé pour la kom bouffe, l'objectif c'est de tout centraliser et automatiser pour choisir des recettes de saison, consulter le calendrier des fruits/légumes, chercher par ingrédient ou par nom, et proposer de nouvelles recettes.
 Le site est hébergé gratuitement sur GitHub Pages et va chercher ses données dans un Google Sheet, via un petit script (Google Apps Script) qui joue le rôle de  API.
