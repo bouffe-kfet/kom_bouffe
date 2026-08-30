@@ -234,17 +234,19 @@
 
     .wrap{position:relative;}
 
+    .nav-wrap{position:relative;margin-bottom:1.5rem;}
+
     .nav-toggle{
       display:flex;justify-content:space-between;align-items:center;
       width:100%;background:transparent;border:1px solid var(--ink-light);border-radius:4px;
       color:var(--paper);font-family:'Space Mono',monospace;font-size:.85rem;text-transform:uppercase;
-      padding:.75rem 1rem;margin-bottom:1.5rem;cursor:pointer;
+      padding:.75rem 1rem;margin-bottom:0;cursor:pointer;
     }
     .nav-toggle .current{color:var(--orange);}
 
     .nav{
       display:none;
-      position:absolute;left:1.5rem;right:1.5rem;top:calc(100% - 1rem);
+      position:absolute;left:0;right:0;top:100%;
       background:var(--ink);border-top:1px solid var(--ink-light);border-bottom:1px solid var(--ink-light);
       z-index:20;margin-bottom:0;flex-wrap:nowrap;flex-direction:column;gap:0;
     }
@@ -270,17 +272,19 @@
     <p>Des recettes végé et de saison pour la semaine. Serviam Indeclinabilem !</p>
   </div>
 
-  <button class="nav-toggle" id="navToggle">
-    <span>☰ <span class="current" id="navToggleLabel">Choisir une recette</span></span>
-    <span id="navToggleArrow">▾</span>
-  </button>
+  <div class="nav-wrap" id="navWrap">
+    <button class="nav-toggle" id="navToggle">
+      <span>☰ <span class="current" id="navToggleLabel">Choisir une recette</span></span>
+      <span id="navToggleArrow">▾</span>
+    </button>
 
-  <div class="nav" id="nav">
-    <button data-view="month" class="active">Choisir une recette</button>
-    <button data-view="recipesearch">Chercher une recette</button>
-    <button data-view="season">Fruits &amp; légumes de saison</button>
-    <button data-view="search">Choisir mon aliment</button>
-    <button data-view="add">Ajouter une recette</button>
+    <div class="nav" id="nav">
+      <button data-view="month" class="active">Choisir une recette</button>
+      <button data-view="recipesearch">Chercher une recette</button>
+      <button data-view="season">Fruits &amp; légumes de saison</button>
+      <button data-view="search">Choisir mon aliment</button>
+      <button data-view="add">Ajouter une recette</button>
+    </div>
   </div>
 
   <div class="view open" id="view-month">
