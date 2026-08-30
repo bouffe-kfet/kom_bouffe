@@ -79,10 +79,10 @@ Toutes les couleurs sont définies une seule fois, tout en haut du `<style>`, so
 Changer une couleur ici la change donc partout dans le site.
 
 Polices utilisées (chargées depuis Google Fonts, tout en haut du `<head>`) :
-- **UnifrakturMaguntia** — le titre "Kom Bouffe", la police K-Fêt quoi
-- **Anton** — les titres de recettes
-- **Karla** — le texte courant
-- **Space Mono** — les labels, boutons, unités (police à chasse fixe)
+- **OldLondon**: le titre "Kom Bouffe" et les petits titres de section. C'est la police K-Fêt (fichier `.ttf`/`.otf`), elle est intégrée directement dans `index.html` via une règle `@font-face` encodée en base64 (comme le logo), donc pas de fichier de police séparé à uploader sur GitHub — tout reste dans ce seul fichier. Le zip original contenait aussi une variante `OldLondonAlternate` (glyphes différents) et deux versions `.otf` ; c'est `OldLondon.ttf` qui a été retenu. Pour changer de variante, il faut réencoder le nouveau fichier en base64 et remplacer le contenu de la règle `@font-face`.
+- **Anton**: les titres de recettes (chargée depuis Google Fonts, en haut du `<head>`)
+- **Karla**: le texte courant (Google Fonts)
+- **Space Mono**: les labels, boutons, unités, police à chasse fixe (Google Fonts)
 
 ## 7. Structure de la page (onglets)
 
