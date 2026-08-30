@@ -83,6 +83,8 @@
   .nav button:hover{border-color:var(--orange);color:var(--paper);}
   .nav button.active{background:var(--orange);border-color:var(--orange);color:var(--charcoal);}
 
+  .nav-toggle{display:none;}
+
   .view{display:none;}
   .view.open{display:block;}
 
@@ -225,10 +227,33 @@
     header h1{font-size:2.6rem;}
     .hero p{font-size:1.15rem;}
     .section-label{font-size:1rem;letter-spacing:.04em;}
-    .nav button{font-size:.85rem;padding:.65rem 1.1rem;}
     .stamp{width:56px;height:56px;font-size:.68rem;}
     .card h3{font-size:1.3rem;}
     .detail h3{font-size:1.9rem;}
+
+    .wrap{position:relative;}
+
+    .nav-toggle{
+      display:flex;justify-content:space-between;align-items:center;
+      width:100%;background:transparent;border:1px solid var(--ink-light);border-radius:4px;
+      color:var(--paper);font-family:'Space Mono',monospace;font-size:.85rem;text-transform:uppercase;
+      padding:.75rem 1rem;margin-bottom:1.5rem;cursor:pointer;
+    }
+    .nav-toggle .current{color:var(--orange);}
+
+    .nav{
+      display:none;
+      position:absolute;left:1.5rem;right:1.5rem;top:calc(100% - 1rem);
+      background:var(--ink);border-top:1px solid var(--ink-light);border-bottom:1px solid var(--ink-light);
+      z-index:20;margin-bottom:0;flex-wrap:nowrap;flex-direction:column;gap:0;
+    }
+    .nav.mobile-open{display:flex;}
+    .nav button{
+      width:100%;text-align:left;border:none;border-bottom:1px solid var(--ink-light);
+      border-radius:0;padding:1rem 1.2rem;background:transparent;
+    }
+    .nav button:last-child{border-bottom:none;}
+    .nav button.active{background:transparent;color:var(--orange);}
   }
 </style>
 </head>
@@ -243,6 +268,11 @@
   <div class="hero">
     <p>Des recettes végé et de saison pour la semaine. Serviam Indeclinabilem !</p>
   </div>
+
+  <button class="nav-toggle" id="navToggle">
+    <span>☰ <span class="current" id="navToggleLabel">Choisir une recette</span></span>
+    <span id="navToggleArrow">▾</span>
+  </button>
 
   <div class="nav" id="nav">
     <button data-view="month" class="active">Choisir une recette</button>
@@ -371,6 +401,15 @@ document.getElementById('nav').addEventListener('click', e => {
   document.querySelectorAll('#nav button').forEach(b => b.classList.toggle('active', b === btn));
   document.querySelectorAll('.view').forEach(v => v.classList.remove('open'));
   document.getElementById('view-' + currentView).classList.add('open');
+  document.getElementById('navToggleLabel').textContent = btn.textContent;
+  document.getElementById('nav').classList.remove('mobile-open');
+  document.getElementById('navToggleArrow').textContent = '▾';
+});
+
+document.getElementById('navToggle').addEventListener('click', () => {
+  const nav = document.getElementById('nav');
+  const open = nav.classList.toggle('mobile-open');
+  document.getElementById('navToggleArrow').textContent = open ? '▴' : '▾';
 });
 
 function renderAll(){
